@@ -13,18 +13,6 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
-      - name: Parse release notes
-        id: parse
-        shell: bash
-        run: |
-          release_version=v${GITHUB_REF:11}
-          r=$(./scripts/parse-changelog.sh "${release_version}")
-          r="${r//'%'/'%25'}"
-          r="${r//$'\n'/'%0A'}"
-          r="${r//$'\r'/'%0D'}"
-          echo "notes=$r" >> "$GITHUB_OUTPUT"
-  
-
   publish-github:
     name: Publish on GitHub
     runs-on: ${{ matrix.config.OS }}
